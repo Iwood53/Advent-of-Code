@@ -2,7 +2,7 @@ const fs = require('fs');
 
 var sledCourse = fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/);
 
-var inputRouteParams = [{horizontal: 1, vertical: 1}, {horizontal: 3, vertical: 1}, {horizontal: 5, vertical: 1}, {horizontal: 7, vertical: 1}, {horizontal: 1, vertical: 2} ]
+var inputRouteParams = [ {horizontal: 1, vertical: 1}, {horizontal: 3, vertical: 1}, {horizontal: 5, vertical: 1}, {horizontal: 7, vertical: 1}, {horizontal: 1, vertical: 2} ]
 
 var answer = routeMultiplication(sledCourse, inputRouteParams, 0, 0)
 
