@@ -20,8 +20,7 @@ function recursiveCompute(input, startIndex = 0){
 }
 
 function findTargetVar(target, input, nounLower = 0, nounUpper = 99, verbLower = 0, verbUpper = 99){
-    for (var n = nounLower; n <= nounUpper; n++)
-    {
+    for (var n = nounLower; n <= nounUpper; n++){
         for (var v = verbLower; v <= verbUpper; v++){
             let currentInput = Object.assign({}, input)
             currentInput[1] = n;
