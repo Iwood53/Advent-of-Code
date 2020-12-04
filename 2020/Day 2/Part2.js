@@ -2,8 +2,6 @@ const fs = require('fs');
 
 var passwordsRaw = fs.readFileSync('raw.csv', 'utf-8').split(/\r\n/);
 
-console.time('main')
-
 counter = 0;
 
 passwordsRaw.forEach(element => {
@@ -16,5 +14,4 @@ passwordsRaw.forEach(element => {
     }
 })
 
-console.timeEnd('main');
 console.log(counter);
