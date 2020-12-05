@@ -3,11 +3,11 @@ const fs = require('fs');
 var batchTickets = []
 fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/).forEach(ticket => { batchTickets.push(parseTicket(ticket)) });
 
-var answer = findMySeat(batchTickets)
+var answer = recurveFindMySeat(batchTickets)
 
 console.log(answer);
 
-function findMySeat(ticketList, searchConditions = [63,64,0]){
+function recurveFindMySeat(ticketList, searchConditions = [63,64,0]){
     if (isSeatOpen(ticketList, searchConditions[0], searchConditions[2]) && validateIdRule(ticketList, searchConditions[0], searchConditions[2])){
         return { row : searchConditions[0], column : searchConditions[2], id : (searchConditions[0] * 8) + searchConditions[2] };
     }
@@ -24,7 +24,7 @@ function findMySeat(ticketList, searchConditions = [63,64,0]){
 
     if (searchConditions[0] < 0 || searchConditions[1] > 127) { return "error" }
 
-    return findMySeat(ticketList, searchConditions);
+    return recurveFindMySeat(ticketList, searchConditions);
 }
 
 function validateIdRule(ticketList, row, column){
