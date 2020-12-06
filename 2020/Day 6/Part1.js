@@ -12,4 +12,8 @@ input.forEach(group => {
     }
     runningSum += holdingString.length;
 })
+
 console.log(runningSum)
+
+
+
