@@ -1,57 +1,31 @@
 const fs = require('fs');
 
-var cleanWires = [];
 var rawWireDiagram = Object.values(fs.readFileSync('raw.txt', 'utf-8').split("\n"));
-rawWireDiagram.forEach(wire => { cleanWires.push(wire.split(',')) });
+rawWireDiagram.forEach(wire => { console.log(getWirePoints(wire.split(','))) });
 
-
-
-var m1 = getLineSlope(-5,1,5,1);
-var b1 = getYIntercept(-5,1,m1);
-var m2 = getLineSlope(0,-5,0,5);
-var b2 = getYIntercept(0,-5,m2);
-
-console.log(m1);
-console.log(b1);
-console.log(m2);
-console.log(b2);
-
-
-
-console.log(findLineXIntersection(m1,b1,m2,b2));
-
-
-
-function getLineSlope(x1, y1, x2, y2) {
-    var denom = x1 - x2;
-    slope = denom == 0 ? 0 : (y1 - y2) / (x1 - x2);
-    return slope 
+function lineSegmentIntersections(x11, y11, x12, y12, x21, y21, x22, y22){
+    //check parallel vs perpend
+    if ((x11 - x12 == 0 && x21 - x22 == 0) || (y11 - y12 == 0 && y21 - y22 == 0)){
+        //parallel
     }
+    else {
+        //perpend
+    }
+}
 
-function getYIntercept(x, y, m){
+
+function getWirePoints(wires, currentPoint = [0,0], wirePoints = []){
     
-    return -(m * x) + y;
-}
+    if (wires[0][0] == 'U'){ currentPoint[1] +=  +wires[0].substring(1) }
+    if (wires[0][0] == 'D'){ currentPoint[1] -=  +wires[0].substring(1) }
+    if (wires[0][0] == 'R'){ currentPoint[0] +=  +wires[0].substring(1) }
+    if (wires[0][0] == 'L'){ currentPoint[0] -=  +wires[0].substring(1) }
 
-//mx+b = mx+b
-function findLineXIntersection(m1, b1, m2, b2){
-    if (m1 - m2 == 0) { return 0;}
-    else return (b1 + b2) / (m1 - m2);
-}
+    wirePoints.push(currentPoint.map(x => x));
+    wires.shift();
 
-function pair(x, y){
-    var xx = x >= 0 ? x * 2 : x * -2 - 1;
-    var yy = y >= 0 ? y * 2 : y * -2 - 1;
-    return (xx >= yy) ? (xx * xx + xx + yy) : (yy * yy + xx);
-}
-
-function unpair(index){
-    var sqrtz = Math.floor(Math.sqrt(index));
-    var sqz = sqrtz * sqrtz;
-    var result1 = ((index - sqz) >= sqrtz) ? [sqrtz, index - sqz - sqrtz] : [index - sqz, sqrtz];
-    var xx = result1[0] % 2 === 0 ? result1[0] / 2 : (result1[0] + 1 ) / -2;
-    var yy = result1[1] % 2 === 0 ? result1[1] / 2 : (result1[1] + 1 )/ -2;
-    return [xx, yy];
+    if (wires.length != 0){ return getWirePoints(wires, currentPoint, wirePoints) }
+    return wirePoints;
 }
 
 
