@@ -38,4 +38,3 @@ function getPossibleBagCount(targetBag, fullBagList, matchingBagList = [])
     })
     return matchingBagList;
 }
-

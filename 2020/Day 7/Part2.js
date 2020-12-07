@@ -1,14 +1,21 @@
 const fs = require('fs');
 
-var bags = fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/);
+var answer = getTotalBagCount('shiny gold', parseBags(fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/)))
 
-var possibleBags = getPossibleBagCount('shiny gold', parseBags(bags));
-
-var answer = 0;
-possibleBags.forEach(bag => {
-    //console.log(bag)
-})
 console.log(answer);
+
+
+function getTotalBagCount(targetBag, fullBagList){
+    var counter = 0;
+    var bags = fullBagList.find(x => x.target_bag == targetBag);
+    
+    bags.subBags.forEach(bag => {
+        var nextBagDeep = getTotalBagCount(bag.bag, fullBagList);
+        counter += +bag.count * (1 + nextBagDeep);
+    })
+        
+    return counter;    
+}
 
 function parseBags(bags, parsedBagList = []){
     var targetBag = bags[0].split(" bags contain ")[0];
@@ -29,17 +36,6 @@ function parseBags(bags, parsedBagList = []){
     
     bags.shift();
     if (bags.length == 0){ return parsedBagList }
+    
     return parseBags(bags, parsedBagList);
 } 
-
-function getPossibleBagCount(targetBag, fullBagList, matchingBagList = [])
-{    
-    fullBagList.forEach(record =>{      
-        if (record.subBags.some(e => e.bag === targetBag)){
-            if (!matchingBagList.includes(record)){ matchingBagList.push(record) }
-            return getPossibleBagCount(record.target_bag, fullBagList, matchingBagList);  
-        }            
-    })
-    return matchingBagList;
-}
-
