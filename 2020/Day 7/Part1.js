@@ -1,8 +1,10 @@
 const fs = require('fs');
 
 
-var answer = getPossibleBagCount('shiny gold', parseBags(fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/))).length;
+// input for browser = $('pre').innerText.split('\n').filter(row => row.length)
+const input = fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/);
 
+var answer = getPossibleBagCount('shiny gold', parseBags(input)).length;
 console.log(answer)
 
 
@@ -38,4 +40,3 @@ function parseBags(bags, parsedBagList = []){
     if (bags.length == 0){ return parsedBagList }
     return parseBags(bags, parsedBagList);
 } 
-
