@@ -1,8 +1,12 @@
 const fs = require('fs');
+
+
+// input for browser = $('pre').innerText.split('\n').filter(row => row.length)
 const input = fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/);
 
 var answer = findError(input);
 console.log(answer);
+
 
 function findError(input){
     for (index in input){       

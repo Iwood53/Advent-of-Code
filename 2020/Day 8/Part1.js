@@ -1,8 +1,12 @@
 const fs = require('fs');
+
+
+// input for browser = $('pre').innerText.split('\n').filter(row => row.length)
 const input = fs.readFileSync('raw.txt', 'utf-8').split(/\r\n/);
 
 var answer = breakOnLoop(input);
 console.log(answer);
+
 
 function breakOnLoop(instructions, currentIndex = 0, acc = 0, instructionTracker = []){
     if (!instructionTracker.includes(currentIndex)){
