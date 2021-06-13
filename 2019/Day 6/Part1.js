@@ -28,7 +28,6 @@ class Graph {
         sourceNode.addAdjacent(destinationNode);
 
         if(this.edgeDirection === false) {
-            console.log('testy')
             destinationNode.addAdjacent(sourceNode);
         }
 
